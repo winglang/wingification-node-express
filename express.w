@@ -9,7 +9,7 @@ pub class ExpressApp {
     let handler = ExpressApp.handler(appDirectory);
 
     let fn = new cloud.Function(inflight (payload) => {
-      return handler(payload, aws.Function.context()!);
+      return handler(payload, aws.Function.context() ?? unsafeCast({}));
     });
 
     if let awsfn = aws.Function.from(fn) {
@@ -18,9 +18,25 @@ pub class ExpressApp {
         authorizationType: "NONE",
       );
 
-    this.url = fnUrl.functionUrl;
-    new cloud.Endpoint(this.url);
+      this.url = fnUrl.functionUrl;
+    } else {
+      let api = new cloud.Api();
+      // TODO: api.any() instead of api.get() to support all HTTP methods
+      api.get("/", inflight (req) => {
+        let method: str = unsafeCast(req.method);
+        let awsRequest = Json {
+          path: req.path,
+          queryStringParameters: req.query,
+          body: req.body,
+          httpMethod: method,
+          headers: req.headers,
+        };
+        return unsafeCast(fn.invoke(unsafeCast(awsRequest))!);
+      });
+      this.url = api.url;
     }
+
+    new cloud.Endpoint(this.url);
   }
 }
 

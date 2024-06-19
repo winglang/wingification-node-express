@@ -3,7 +3,6 @@ bring http;
 bring expect;
 bring fs;
 
-
 let express = new m.ExpressApp(fs.join(@dirname, "./server/app.ts"));
 
 test "calling express" {
