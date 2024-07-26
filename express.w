@@ -9,7 +9,7 @@ pub class ExpressApp {
     let handler = ExpressApp.handler(appDirectory);
 
     let fn = new cloud.Function(inflight (payload) => {
-      return handler(payload, aws.Function.context() ?? unsafeCast({}));
+      return handler(payload ?? {}, aws.Function.context() ?? unsafeCast({}));
     });
 
     if let awsfn = aws.Function.from(fn) {
@@ -31,7 +31,7 @@ pub class ExpressApp {
           httpMethod: method,
           headers: req.headers,
         };
-        return unsafeCast(fn.invoke(unsafeCast(awsRequest))!);
+        return unsafeCast(fn.invoke(awsRequest)!);
       });
       this.url = api.url;
     }

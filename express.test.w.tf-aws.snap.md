@@ -8,7 +8,7 @@
     "metadata": {
       "backend": "local",
       "stackName": "root",
-      "version": "0.20.3"
+      "version": "0.20.7"
     },
     "outputs": {
       "root": {
@@ -103,6 +103,9 @@
         },
         "function_name": "Function-c8bfefab",
         "handler": "index.handler",
+        "logging_config": {
+          "log_format": "JSON"
+        },
         "memory_size": 1024,
         "publish": true,
         "role": "${aws_iam_role.ExpressApp_Function_IamRole_8403E3ED.arn}",
@@ -150,8 +153,8 @@
           }
         },
         "bucket": "${aws_s3_bucket.Code.bucket}",
-        "key": "asset.c8bfefab3d704f19c29dc7d6530b760cd0d9af8330.b33c77f20164e3e10d3369b62813b8c5.zip",
-        "source": "assets/ExpressApp_Function_Asset_485DCEC1/2562B0F698A26D2387D8A4111EEB9932/archive.zip"
+        "key": "asset.c8bfefab3d704f19c29dc7d6530b760cd0d9af8330.66714582ad0932d1670a6596fe84088c.zip",
+        "source": "assets/ExpressApp_Function_Asset_485DCEC1/BDAB118AA62D9A510CB31FA29A5209A9/archive.zip"
       }
     }
   },
@@ -164,7 +167,7 @@
     "required_providers": {
       "aws": {
         "source": "aws",
-        "version": "5.31.0"
+        "version": "5.56.1"
       }
     }
   }
